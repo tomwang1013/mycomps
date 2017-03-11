@@ -55,7 +55,7 @@
     },
 
     data: function() {
-      let idx = this.allValues.indexOf(this.initialValue);
+      var idx = this.allValues.indexOf(this.initialValue);
 
       return {
         curSelectedIdx: idx,
