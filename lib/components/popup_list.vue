@@ -189,10 +189,12 @@
 
       var me = this;
 
-      $.get(this.itemsInitUrl, function(data) {
-        me.allItems = data.items;
-        me.items = data.items;
-      });
+      if (this.itemsInitUrl) {
+        $.get(this.itemsInitUrl, function(data) {
+          me.allItems = data.items;
+          me.items = data.items;
+        });
+      }
     }
   };
 </script>
