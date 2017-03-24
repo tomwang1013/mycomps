@@ -169,7 +169,7 @@
         if (0 <= idx && idx < this.items.length) {
           this.value = this.items[idx];
           this.reset();
-          this.$emit('change', this.oriValue, this.value);
+          this.$emit('change', this.oriValue, this.value, this.fieldName);
         }
       },
 

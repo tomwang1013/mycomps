@@ -148,7 +148,7 @@
       changeValue: function(nv) {
         this.value = nv;
         this.isPopup = false;
-        this.$emit('change', this.oriValue, this.value);
+        this.$emit('change', this.oriValue, this.value, this.fieldName);
       },
 
       getItemsByLevel: function(level) {
