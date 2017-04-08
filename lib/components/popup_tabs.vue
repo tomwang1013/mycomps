@@ -5,7 +5,7 @@
     v-bind:data-ori-value='oriValue'
     v-bind:value='value'
     v-bind:class='fieldClass'
-    @focus='isPopup = true' readonly/>
+    @click='isPopup = true' readonly/>
   <div class="o-pt-tabs u-small-font" v-show='isPopup'>
     <ul class="u-nav-list o-pt-tabs__lables">
       <li @click.stop='switchTab($event, label)' v-for="label in labels"
