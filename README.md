@@ -11,7 +11,7 @@ fa-rating(
   v-bind:all-values="['0','1','2','3','4']")
 ```
 
-[fa-rating](doc/fa-rating.png)
+![fa-rating](doc/fa-rating.png)
 
 ## `input-labels`: labels management in an text input
 
@@ -23,7 +23,7 @@ input-labels(input-id='labels'
              init-labels=question.labels.join(','))
 ```
 
-[input-labels](doc/input-labels.png)
+![input-labels](doc/input-labels.png)
 
 ## `popup-list`: popup search list
 
@@ -39,7 +39,7 @@ popup-list(
   v-on:change='onChange')
 ```
 
-[popup-list](doc/popup-list.png)
+![popup-list](doc/popup-list.png)
 
 ## `popup-overlay`: popup a dialog on an gray overlay
 
@@ -48,7 +48,7 @@ popup-overlay(v-on:ok='onOk' ref='po')
   span(slot='body') 删除后无法恢复，确定要删除这个问题吗？
 ```
 
-[popup-overlay](doc/popup-overlay.png)
+![popup-overlay](doc/popup-overlay.png)
 
 ## `popup-tabs`: multiple-hierarchies tabs to select a value from the last tab
 
@@ -62,7 +62,7 @@ popup-tabs(
   v-bind:init-items='initItems')
 ```
 
-[popup-tabs](doc/popup-tabs.png)
+![popup-tabs](doc/popup-tabs.png)
 
 ## `search_suggestion`: search suggestion input
 
@@ -73,6 +73,6 @@ search-sugg(field-name='company_name'
             search-url='/users/queryByCompanyName')
 ```
 
-[search-suggetion](doc/search-suggestion.png)
+![search-suggetion](doc/search-suggestion.png)
 
 More details please check the source code. It is easy to use.
