@@ -1,6 +1,6 @@
 {
   "name": "mycomps",
-  "version": "0.0.5",
+  "version": "0.0.6-rc1",
   "description": "common vuejs components used in my projects, maybe useful to you too",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
   ],
   "author": "tomwang",
   "dependencies": {
-    "jquery": "^2.2.1",
+    "axios": "^0.16.1",
     "lodash": "^4.13.1"
   },
   "license": "MIT",

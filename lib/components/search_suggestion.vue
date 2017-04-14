@@ -18,7 +18,8 @@
 </template>
 
 <script>
-  var $ = require('jquery');
+  var util = require('../util');
+  var axios = require('axios');
 
   module.exports = {
     name: 'search-suggestion',
@@ -76,7 +77,11 @@
       searchItems: function() {
         var me = this;
 
-        $.get(this.searchUrl, { kw: this.keyword }, function(data) {
+        axios.get(this.searchUrl, {
+          params: { kw: this.keyword }
+        }).then(function(response) {
+          var data = response.data;
+
           me.items = data.items;
           me.isPopup = me.items.length > 0;
           me.hIndex = 0;
@@ -121,15 +126,7 @@
     watch: {
       isPopup: function(nv) {
         if (!nv) return;
-
-        var me = this;
-
-        $('html').on('click.ss', function(e) {
-          if (!$(e.target).closest('.o-ss-wrapper').length) {
-            me.isPopup = false;
-            $('html').off('click.ss');
-          }
-        });
+        util.closePopOnClkOut.call(this);
       }
     }
   };

@@ -27,7 +27,7 @@
 </template>
 
 <script>
-  var $ = require('jquery');
+  var util = require('../util');
 
   module.exports = {
     name: 'popup-tabs',
@@ -48,15 +48,7 @@
     watch: {
       isPopup: function(nv) {
         if (!nv) return;
-
-        var me = this;
-
-        $('html').on('click.pt', function(e) {
-          if (!$(e.target).closest('.o-pt-root').length) {
-            me.isPopup = false;
-            $('html').off('click.pt');
-          }
-        });
+        util.closePopOnClkOut.call(this);
       }
     },
 

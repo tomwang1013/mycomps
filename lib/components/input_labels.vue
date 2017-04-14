@@ -15,8 +15,7 @@
     </span>
 
     <!-- popup matching labels -->
-    <div class="o-labels-popup u-small-font" v-show="showPopup">
-      <span class="fa fa-times o-labels-popup__close fa-lg" @click="showPopup = false"></span>
+    <div class="o-labels-popup u-small-font" v-show="isPopup">
       <ul class="u-nav-list">
         <template v-for="label in matchingLabels">
           <li class="o-labels-popup__item" :data-label="label.name" @click="addToCurLabels">
@@ -30,8 +29,9 @@
 </template>
 
 <script>
-  var $ = require('jquery');
+  var axios = require('axios');
   var _ = require('lodash');
+  var util = require('../util');
 
   module.exports = {
     data: function() {
@@ -39,8 +39,15 @@
         currentLabels: !this.initLabels ? [] : this.initLabels.split(','),
         matchingLabels: [],
         isActive: false,
-        showPopup: false,
+        isPopup: false,
         inputLabel: ''
+      }
+    },
+
+    watch: {
+      isPopup: function(nv) {
+        if (!nv) return;
+        util.closePopOnClkOut.call(this);
       }
     },
 
@@ -64,18 +71,22 @@
       // instantly search matching labels when input label prefix
       searchLabels: function(evt) {
         if (!this.inputLabel) {
-          this.showPopup = false;
+          this.isPopup = false;
           return;
         }
 
         var me = this;
 
-        $.get(this.searchUrl, { name: me.inputLabel }, function(data) {
+        axios.get(this.searchUrl, {
+          params: { name: me.inputLabel }
+        }).then(function(response) {
+          var data = response.data;
+
           if (data.error || !data.labels.length) {
-            me.showPopup = false;
+            me.isPopup = false;
           } else {
             me.matchingLabels = data.labels;
-            me.showPopup = true;
+            me.isPopup = true;
           }
         });
       },
@@ -84,7 +95,11 @@
       addLabel: function(evt) {
         var me = this;
 
-        $.post(this.addUrl, { name: me.inputLabel }, function(data) {
+        axios.post(this.addUrl, {
+          name: me.inputLabel
+        }).then(function(response) {
+          var data = response.data;
+
           me.currentLabels.push(me.inputLabel);
           me.inputLabel = '';
         });

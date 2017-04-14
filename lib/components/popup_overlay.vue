@@ -18,8 +18,6 @@
 </template>
 
 <script>
-  var $ = require('jquery');
-
   module.exports = {
     name: 'popup-overlay',
 

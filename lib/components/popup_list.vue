@@ -6,7 +6,7 @@
 
   <input type='text' :name='fieldName' :id='fieldName'
     v-bind:class="fieldClass.join(' ')"
-    v-on:focus='onInputFocus'
+    @click='onInputClick'
     :data-ori-value='oriValue'
     v-model='value' readonly/>
 
@@ -29,7 +29,8 @@
 </template>
 
 <script>
-  var $ = require('jquery');
+  var axios = require('axios');
+  var util = require('../util');
 
   module.exports = {
     data: function() {
@@ -109,9 +110,7 @@
     },
 
     methods: {
-      onInputFocus: function(evt) {
-        var me = this;
-
+      onInputClick: function(evt) {
         this.isPopup = true;
 
         if (this.hasSearchBar) {
@@ -119,13 +118,6 @@
             this.$refs.searchBar.focus();
           });
         }
-
-        $('html').on('click.pl', function(e) {
-          if (!$(e.target).closest('.o-pl-wrapper').length) {
-            me.reset();
-            $('html').off('click.pl');
-          }
-        });
       },
 
       searchItems: function() {
@@ -136,11 +128,11 @@
         });
 
         this.hIndex = 0;
-        this.showStartIdx = 0;  // reset show range
+        this.showStartIdx = 0;  // clear show range
       },
 
       scrollDownItems: function() {
-        if (!this.isPopup || this.hIndex >= this.items.length - 1) {
+        if (this.hIndex >= this.items.length - 1) {
           return;
         }
 
@@ -153,7 +145,7 @@
       },
 
       scrollUpItems: function() {
-        if (!this.isPopup || this.hIndex <= 0) {
+        if (this.hIndex <= 0) {
           return;
         }
 
@@ -168,7 +160,7 @@
       selectItem: function(evt, idx) {
         if (0 <= idx && idx < this.items.length) {
           this.value = this.items[idx];
-          this.reset();
+          this.isPopup = false;
           this.$emit('change', this.oriValue, this.value, this.fieldName);
         }
       },
@@ -178,8 +170,17 @@
         this.items = this.allItems;
         this.hIndex = 0;
         this.showStartIdx = 0;
-        this.isPopup = false;
         this.$refs.itemsList.scrollTop = 0;
+      }
+    },
+
+    watch: {
+      isPopup: function(nv) {
+        if (!nv) {
+          this.reset();
+        } else {
+          util.closePopOnClkOut.call(this);
+        }
       }
     },
 
@@ -190,7 +191,9 @@
       var me = this;
 
       if (this.itemsInitUrl) {
-        $.get(this.itemsInitUrl, function(data) {
+        axios.get(this.itemsInitUrl).then(function(response) {
+          var data = response.data;
+
           me.allItems = data.items;
           me.items = data.items;
         });
