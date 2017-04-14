@@ -1,6 +1,6 @@
 {
   "name": "mycomps",
-  "version": "0.0.6-rc1",
+  "version": "0.0.6",
   "description": "common vuejs components used in my projects, maybe useful to you too",
   "main": "index.js",
   "scripts": {
